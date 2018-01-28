@@ -1,7 +1,10 @@
-//var inquirer = require("inquirer");
+var inquirer = require("inquirer");
 
 
-var wordtest = ["working on it"];
+var wordtest = ["TERRY"];
+var userTries = 10
+var currentWord;
+var wordHolder
 
 
 function guess() {
@@ -14,8 +17,10 @@ function guess() {
         }
       ])
       .then(function(answer) {
-        check(answer);
-
+        
+        
+        check(answer.letter);
+        
       });
   }
 
@@ -23,8 +28,43 @@ function guess() {
 
 
 
-function check(){
+function check(answer){
 
+  if(currentWord.indexOf(answer) == -1) {
+    userTries--;
+    console.log("WRONG!")
+  }
+  else{
+    console.log("CORRECT!")
+  } 
+
+  for(i= 0; i < wordHolder.length; i++){
+
+ 
+
+    if(currentWord[i] === answer) {
+    wordHolder[i] = answer; //updates place holder variable with correct guess  
+  }
+
+  }
+
+    console.log(makeString(wordHolder," "));
+
+
+
+    if(wordHolder.indexOf("_") == -1) {
+      console.log("You Win!!! Onto Next Game!")
+      start();
+    }       
+    else if(userTries != 0){
+     
+      console.log("You Have "+userTries+" guess left")
+      guess();
+    }
+    else{
+      console.log("You Lose!!!");
+      start();
+    }
 
 
 
@@ -39,21 +79,24 @@ function makeString(arr, holder) {
 
 function start(){
     wordHolder =[];
-    guessNum=10;
-    var currentWord = wordtest[0].toUpperCase();
+    currentWord=[];
+    userTries = 10
+    currentWord = wordtest[0].toUpperCase();
     currentWord = currentWord.split("");
 
     for(var i = 0; i < currentWord.length; i++) {
         wordHolder.push("_");
-        };
+    };
     
 
     
     console.log(makeString(wordHolder," "));
-
+    guess();
       
 
   }
 
 
   start();
+
+ 
