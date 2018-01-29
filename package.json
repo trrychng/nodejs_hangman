@@ -1,0 +1,16 @@
+{
+  "name": "node-hangman",
+  "version": "1.0.0",
+  "description": "NodeJS HANGMAN Commandline!",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^5.0.1",
+    "wordlist-english": "^1.2.0"
+  }
+}

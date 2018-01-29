@@ -1,10 +1,42 @@
-var inquirer = require("inquirer");
+const inquirer = require("inquirer");
+const wordFile = require("./word.js");
+const lettersFile = require("./letters.js");
 
-
-var wordtest = ["TERRY"];
-var userTries = 10
+var userTries = 6
 var currentWord;
-var wordHolder
+var wordHolder;
+var lettersGuessed;
+
+function start(){
+  wordHolder =[];
+  currentWord=[];
+  lettersGuessed=[];
+  userTries = 6
+
+  let randomWord = wordFile.wordGenerator()
+  currentWord = randomWord.WORD.toUpperCase();
+
+  //console.log(currentWord) //View random word generator
+  currentWord = currentWord.split("");
+
+  for(var i = 0; i < currentWord.length; i++) {
+      wordHolder.push("_");
+  };
+  
+
+  console.log(makeString(wordHolder," "));
+  guess();
+
+}
+
+
+
+
+start();
+
+function makeString(arr, holder) { 
+  return(arr.toString()).replace(/,/g, holder); 
+}
 
 
 function guess() {
@@ -14,12 +46,24 @@ function guess() {
           name: "letter",
           type: "input",
           message: "Guess a letter: ",
+          
         }
       ])
       .then(function(answer) {
+        let userGuess=answer.letter;
+        let results= lettersFile.lettersChecker(userGuess, lettersGuessed);
         
-        
-        check(answer.letter);
+
+       if(results.status === 1){
+        check(results.guess)
+        lettersGuessed=results.pastGuess;
+       }
+       else{
+        guess();
+       }
+
+
+  
         
       });
   }
@@ -30,25 +74,18 @@ function guess() {
 
 function check(answer){
 
-  if(currentWord.indexOf(answer) == -1) {
+
+  let results = wordFile.wordChecker(currentWord, wordHolder, answer)
+
+  //console.log(results);
+
+  currentWord=results.currentWord;
+  wordHolder=results.wordHolder;
+
+  if(results.status === 1){
     userTries--;
-    console.log("WRONG!")
   }
-  else{
-    console.log("CORRECT!")
-  } 
-
-  for(i= 0; i < wordHolder.length; i++){
-
- 
-
-    if(currentWord[i] === answer) {
-    wordHolder[i] = answer; //updates place holder variable with correct guess  
-  }
-
-  }
-
-    console.log(makeString(wordHolder," "));
+  console.log(makeString(wordHolder," "));
 
 
 
@@ -65,38 +102,17 @@ function check(answer){
       console.log("You Lose!!!");
       start();
     }
-
-
-
-
   }
 
 
-function makeString(arr, holder) { 
-    return(arr.toString()).replace(/,/g, holder); 
-}
 
 
-function start(){
-    wordHolder =[];
-    currentWord=[];
-    userTries = 10
-    currentWord = wordtest[0].toUpperCase();
-    currentWord = currentWord.split("");
-
-    for(var i = 0; i < currentWord.length; i++) {
-        wordHolder.push("_");
-    };
-    
-
-    
-    console.log(makeString(wordHolder," "));
-    guess();
-      
-
-  }
 
 
-  start();
 
- 
+
+
+
+
+
+
