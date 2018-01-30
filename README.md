@@ -12,11 +12,7 @@ Steps:
 FAQ:
 1. Duplicate keys? No  see below.  
 $ node hangman.js
-_ _ _ _ _ _ _ _ _ _ _ _ _ _
-? Guess a letter:  A
-A
-YOUR GUESS OF A IS INCORRECT!!
-_ _ _ _ _ _ _ _ _ _ _ _ _ _
+
 You Have 5 guess left
 ? Guess a letter:  A
 A
